@@ -29,7 +29,7 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGround = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        isGround = Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
         if(horizontal != 0) 
         {
