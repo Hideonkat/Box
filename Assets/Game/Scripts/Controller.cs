@@ -8,17 +8,17 @@ public class Controller : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] Transform groundCheck;
-    [SerializeField] Transform WallCheck;
-    [SerializeField] LayerMask wallLayer;
+    [SerializeField] Transform groundCheck2;
+    
 
     private float horizontal;
-    private bool isWallSlide;
-    private float wallSlideSpeed = 1.0f;
+    
 
 
     public LayerMask groundLayer;
     private Rigidbody2D rb;
     private bool isGround;
+    private bool isGround2;
 
     // Start is called before the first frame update
     void Start()
@@ -29,37 +29,24 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGround2 = Physics2D.OverlapCircle(groundCheck2.position, 0.3f, groundLayer);
         isGround = Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
         if(horizontal != 0) 
         {
             Move(horizontal);
         }
-        if(isGround && Input.GetKeyDown(KeyCode.UpArrow))
+        if(isGround && Input.GetKeyDown(KeyCode.UpArrow) || isGround2 && Input.GetKeyDown(KeyCode.UpArrow))
         {
             Jump();
         }
-        WallSlide();
+        
        
 
     }
-    private bool isWall()
-    {
-        return Physics2D.OverlapCircle(WallCheck.position, 0.2f, wallLayer);
-    }
+    
 
-    private void WallSlide()
-    {
-        if (isWall() && !isGround && horizontal != 0 )
-        {
-            isWallSlide = true;
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlideSpeed, float.MaxValue));
-        }
-        else
-        {
-            isWallSlide = false;
-        }
-    }
+    
     private void Move(float horizontal)
     {
         rb.velocity = new Vector2 (horizontal * moveSpeed,rb.velocity.y);

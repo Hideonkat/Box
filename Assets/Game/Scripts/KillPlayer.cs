@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class KillPlayer : MonoBehaviour
 {
-    Vector2 startPois;
-
+     Vector2 startPois;
+    
     private void Start()
     {
         startPois = transform.position;
@@ -25,7 +25,7 @@ public class KillPlayer : MonoBehaviour
         Respawn();
     }
 
-    void Respawn()
+     void Respawn()
     {
         transform.position = startPois;
     }
